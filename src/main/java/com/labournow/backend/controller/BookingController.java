@@ -33,9 +33,10 @@ public class BookingController {
     @PostMapping("/{bookingId}/accept")
     public ResponseEntity<?> acceptBooking(
             @PathVariable Long bookingId,
-            @RequestParam String workerPhone) {
+            @RequestParam String workerPhone,
+            @RequestParam(required = false) String eta) {
         try {
-            return ResponseEntity.ok(bookingService.acceptBookingByPhone(bookingId, workerPhone));
+            return ResponseEntity.ok(bookingService.acceptBookingByPhone(bookingId, workerPhone, eta));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }

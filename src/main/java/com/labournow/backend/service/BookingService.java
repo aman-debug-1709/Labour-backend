@@ -48,7 +48,7 @@ public class BookingService {
     }
 
     @Transactional
-    public Map<String, Object> acceptBookingByPhone(Long bookingId, String workerPhone) {
+    public Map<String, Object> acceptBookingByPhone(Long bookingId, String workerPhone, String eta) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking not found: " + bookingId));
 
@@ -61,6 +61,9 @@ public class BookingService {
 
         booking.setWorker(worker);
         booking.setStatus(Booking.Status.ACCEPTED);
+        if (eta != null && !eta.trim().isEmpty()) {
+            booking.setEta(eta);
+        }
         bookingRepository.save(booking);
 
         messagingTemplate.convertAndSend("/topic/customer/" + booking.getCustomer().getId(),
@@ -116,6 +119,7 @@ public class BookingService {
         m.put("status", b.getStatus() != null ? b.getStatus().name() : "PENDING");
         m.put("addressDetails", b.getAddressDetails() != null ? b.getAddressDetails() : "");
         m.put("problemDescription", b.getProblemDescription() != null ? b.getProblemDescription() : "");
+        m.put("eta", b.getEta() != null ? b.getEta() : "");
         m.put("estimatedPrice", b.getEstimatedPrice() != null ? b.getEstimatedPrice().toString() : "0");
         m.put("createdAt", b.getCreatedAt() != null ? b.getCreatedAt().toString() : "");
 

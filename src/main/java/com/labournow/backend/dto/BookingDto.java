@@ -26,6 +26,7 @@ public class BookingDto {
     private Double longitude;
     private String addressDetails;
     private String problemDescription;
+    private String eta;
     private BigDecimal estimatedPrice;
     private LocalDateTime createdAt;
 
@@ -50,6 +51,7 @@ public class BookingDto {
                 .longitude(b.getLongitude())
                 .addressDetails(b.getAddressDetails())
                 .problemDescription(b.getProblemDescription())
+                .eta(b.getEta())
                 .estimatedPrice(b.getEstimatedPrice())
                 .createdAt(b.getCreatedAt());
 

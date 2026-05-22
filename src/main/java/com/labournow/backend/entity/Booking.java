@@ -47,6 +47,9 @@ public class Booking {
 
     private String problemDescription;
 
+    // ETA provided by worker when accepting the job
+    private String eta;
+
     // Initial estimation or agreed price
     @Column(precision = 10, scale = 2)
     private BigDecimal estimatedPrice;
