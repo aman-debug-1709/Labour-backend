@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: helpit-backend
+    env: docker
+    plan: free
+    region: oregon
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_HOST
+        fromDatabase:
+          name: helpit-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: helpit-db
+          property: port
+      - key: DB_USER
+        fromDatabase:
+          name: helpit-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: helpit-db
+          property: password
+      - key: DB_NAME
+        fromDatabase:
+          name: helpit-db
+          property: database
+
+databases:
+  - name: helpit-db
+    plan: free
+    region: oregon
